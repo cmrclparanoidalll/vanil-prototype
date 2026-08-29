@@ -42,9 +42,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 /* Метри, дні, міліметри й роки набираються великим кеглем і табличними
    цифрами — це те, чим студія відрізняється, а не мудборд. */
 .num{
-  display:block;font-size:clamp(68px,9.5vw,152px);line-height:.82;
+  display:block;font-weight:400;                 /* <b> інакше дає штучний жирний */
+  font-size:clamp(68px,9.5vw,152px);line-height:.82;
   letter-spacing:-.02em;font-variant-numeric:tabular-nums;
 }
+/* Статичні цифри не треба вирівнювати між собою по вертикалі, а табличний слот
+   центрує «1» і відсуває число від підпису. Тут пропорційні. */
+.figures .num{font-variant-numeric:proportional-nums}
 .num--sm{font-size:clamp(30px,3.4vw,46px);line-height:.9}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;letter-spacing:0}
 
