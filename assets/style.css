@@ -348,7 +348,7 @@ form .btn{margin-top:var(--s-sm)}
 .foot__info{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-sm);
             align-content:start;padding:var(--s-sm) var(--s-sm) var(--s-lg) var(--g)}
 .foot__line{margin:0 0 2px}
-.bar{display:inline-block;background:var(--k);color:var(--w);padding:1px 5px;font-size:16px;line-height:1.35}
+.bar{display:inline-block;font-size:16px;line-height:1.35}
 .bar a{color:inherit}
 .foot__mail{border-left:1px solid var(--k);
             padding:var(--s-sm) var(--g) var(--s-lg) var(--s-sm);
