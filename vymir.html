@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Записатись на вимір — Ваніль</title>
+<meta name="description" content="Безкоштовний вимір по Києву й області: приїдемо в зручний час, знімемо геометрію й покажемо 3D.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23fff' font-family='Helvetica,Arial'%3E%D0%92%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400&amp;family=Manrope:wght@400&amp;display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">До основного вмісту</a>
+<header class="nav">
+  <a class="nav__mark" href="index.html">ВАНІЛЬ</a>
+  <nav class="nav__links" aria-label="Основна навігація"><a href="kolektsii.html">Проєкти</a><a href="vyrobnytstvo.html">Виробництво</a><a href="yak-tse-pratsyuye.html">Як це працює</a></nav>
+  <div class="nav__acts">
+    <a class="btn" href="rozrakhunok.html">Розрахувати ціну</a>
+    <a class="btn btn--primary" href="vymir.html" aria-current="page">Записатись на вимір</a>
+  </div>
+  <button class="nav__burger" id="burger" type="button" aria-label="Меню"
+          aria-expanded="false" aria-controls="drawer"><i></i><i></i></button>
+</header>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <a class="l" href="kolektsii.html">Проєкти</a>
+  <a class="l" href="vyrobnytstvo.html">Виробництво</a>
+  <a class="l" href="yak-tse-pratsyuye.html">Як це працює</a>
+  <div class="acts">
+    <a class="btn" href="rozrakhunok.html">Розрахувати ціну</a>
+    <a class="btn" href="vymir.html">Записатись на вимір</a>
+  </div>
+  <p class="tel">+38 063 140-58-12<br>Пн–Сб, 09:00–19:00</p>
+</div>
+<main id="main">
+<section class="page">
+  <h1>Записатись на вимір</h1>
+  <p class="intro">Приїдемо в зручний час, знімемо геометрію й покажемо 3D. Безкоштовно і без зобов'язань.</p>
+</section>
+
+<div class="book">
+  <div>
+    <form id="f" novalidate>
+      <div class="fld"><label for="nm">Ім'я</label><input id="nm" name="name" type="text" autocomplete="name" placeholder="Як до вас звертатись"></div>
+      <div class="fld"><label for="tel">Телефон</label><input id="tel" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+38 0__ ___ __ __"></div>
+      <div class="fld"><label for="dis">Район або населений пункт</label><input id="dis" name="district" type="text" placeholder="Наприклад, Оболонь"></div>
+      <div class="fld"><label for="tp">Що потрібно</label>
+        <select id="tp" name="type">
+          <option>Кухня</option>
+          <option>Гардеробна</option>
+          <option>Меблі у ванну</option>
+          <option>Комора</option>
+          <option>Кілька позицій</option>
+        </select>
+      </div>
+      <div class="fld"><label for="sm">Зразки матеріалів</label>
+        <select id="sm" name="samples">
+          <option>Не потрібні</option>
+          <option>Привезти зразки фасадів на вимір</option>
+          <option>Надіслати зразки поштою</option>
+        </select>
+      </div>
+      <button class="btn btn--primary" type="submit">Надіслати</button>
+      <p class="fnote" id="fn" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+  <div class="info">
+    <dl>
+      <dt>Телефони</dt><dd><a href="tel:+380631405812">+38 063 140-58-12</a><br><a href="tel:+380442322540">+38 044 232-25-40</a></dd>
+      <dt>Виробництво</dt><dd>Київ, Кільцева дорога, 22б</dd>
+      <dt>Графік</dt><dd>Пн–Сб, 09:00–19:00</dd>
+      <dt>Вимір</dt><dd>Київ і область, безкоштовно</dd>
+      <dt>Гарантія</dt><dd>5 років на корпус і фурнітуру</dd>
+    </dl>
+  </div>
+</div>
+
+<section class="band">
+  <img src="assets/img/510953370-2400.jpg" alt="Лазерний рівень у порожній кімнаті" loading="lazy" decoding="async">
+  <div class="band__in">
+    <h2>Або просто зателефонуйте</h2>
+    <a class="btn btn--fill" href="tel:+380631405812">+38 063 140-58-12</a>
+  </div>
+</section>
+</main>
+<footer class="foot">
+  <a class="foot__mark" href="index.html" aria-label="Ваніль Студія — на головну">
+    <span>ВАНІЛЬ</span>
+    <span class="foot__arw" aria-hidden="true">&#8594;</span>
+    <span>СТУДІЯ</span>
+  </a>
+
+  <div class="foot__main">
+    <div class="foot__info">
+      <div>
+        <p class="foot__line"><span class="bar">Цех</span> <span class="bar mono" id="clock">--:-- (GMT+3)</span></p>
+        <p class="foot__line"><span class="bar">Кільцева дорога, 22б</span></p>
+        <p class="foot__line"><span class="bar">Київ, 03062</span></p>
+        <p class="foot__line"><span class="bar"><a href="mailto:cex@vanil.studio">cex@vanil.studio</a></span></p>
+      </div>
+      <div>
+        <p class="foot__line"><span class="bar">Вимір</span> <span class="bar">безкоштовно</span></p>
+        <p class="foot__line"><span class="bar">Київ і область</span></p>
+        <p class="foot__line"><span class="bar">Пн–Сб, 09:00–19:00</span></p>
+        <p class="foot__line"><span class="bar"><a href="tel:+380631405812">+38 063 140-58-12</a></span></p>
+      </div>
+      <div>
+        <p class="foot__line"><span class="bar">Гарантія</span> <span class="bar">5 років</span></p>
+        <p class="foot__line"><span class="bar">Корпус і фурнітура</span></p>
+        <p class="foot__line"><span class="bar">Строк 14–38 днів</span></p>
+        <p class="foot__line"><span class="bar"><a href="mailto:hello@vanil.studio">hello@vanil.studio</a></span></p>
+      </div>
+    </div>
+
+    <div class="foot__mail">
+      <h2>Передзвонимо за 10 хвилин</h2>
+      <p class="foot__hint">Залиште номер — наберемо в робочий час. Без форм і листування:
+         відповімо на питання голосом і, якщо треба, одразу запишемо на вимір.</p>
+      <form id="cb">
+        <input type="tel" id="cbtel" inputmode="tel" autocomplete="tel"
+               placeholder="+38 0__ ___ __ __" aria-label="Ваш телефон">
+        <button class="btn btn--primary" type="submit">Передзвоніть мені</button>
+        <p class="fnote" id="cbnote" role="status" aria-live="polite"></p>
+      </form>
+      <div class="foot__soc">
+        <p>Або наберіть самі: <a href="tel:+380631405812">+38 063 140-58-12</a></p>
+        <p><a href="vymir.html">Instagram</a>, <a href="vymir.html">Telegram</a>, <a href="vymir.html">Viber</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot__bot">
+    <p>Ваніль робить кухні на Кільцевій. Міряємо самі, збираємо самі.</p>
+    <p><a href="kolektsii.html">Дивитись усі проєкти</a></p>
+    <p>Прототип · ціни орієнтовні · заявка нікуди не надсилається<br>© Ваніль</p>
+  </div>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

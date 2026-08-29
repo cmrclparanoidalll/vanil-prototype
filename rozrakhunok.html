@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Розрахувати ціну — Ваніль</title>
+<meta name="description" content="Порахуйте орієнтовну вартість кухні, гардеробної чи меблів у ванну за розмірами вашої стіни. Без дзвінків і реєстрації.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23fff' font-family='Helvetica,Arial'%3E%D0%92%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400&amp;family=Manrope:wght@400&amp;display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">До основного вмісту</a>
+<header class="nav">
+  <a class="nav__mark" href="index.html">ВАНІЛЬ</a>
+  <nav class="nav__links" aria-label="Основна навігація"><a href="kolektsii.html">Проєкти</a><a href="vyrobnytstvo.html">Виробництво</a><a href="yak-tse-pratsyuye.html">Як це працює</a></nav>
+  <div class="nav__acts">
+    <a class="btn" href="rozrakhunok.html" aria-current="page">Розрахувати ціну</a>
+    <a class="btn btn--primary" href="vymir.html">Записатись на вимір</a>
+  </div>
+  <button class="nav__burger" id="burger" type="button" aria-label="Меню"
+          aria-expanded="false" aria-controls="drawer"><i></i><i></i></button>
+</header>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <a class="l" href="kolektsii.html">Проєкти</a>
+  <a class="l" href="vyrobnytstvo.html">Виробництво</a>
+  <a class="l" href="yak-tse-pratsyuye.html">Як це працює</a>
+  <div class="acts">
+    <a class="btn" href="rozrakhunok.html">Розрахувати ціну</a>
+    <a class="btn" href="vymir.html">Записатись на вимір</a>
+  </div>
+  <p class="tel">+38 063 140-58-12<br>Пн–Сб, 09:00–19:00</p>
+</div>
+<main id="main">
+<section class="est">
+  <div class="est__top">
+    <span class="est__step" id="stepLbl">1/4</span>
+    <span class="est__bar"><i id="bar" style="width:25%"></i></span>
+  </div>
+
+  <h1 id="title">Розкажіть про ваш проєкт</h1>
+  <p class="est__hint" id="sub">Почніть з одного приміщення — решту додамо на вимірі.</p>
+
+  <div class="step" data-step="1">
+    <p class="est__q" id="q-room">Яке приміщення рахуємо?</p>
+    <div class="opts" data-group="room" role="group" aria-labelledby="q-room">
+      <button class="opt" type="button" data-v="kitchen" data-l="Кухня" aria-pressed="true">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="6" y="8" width="108" height="16"/><circle cx="34" cy="16" r="5"/><circle cx="76" cy="16" r="5"/><rect x="6" y="38" width="46" height="12"/></svg>
+        Кухня
+      </button>
+      <button class="opt" type="button" data-v="wardrobe" data-l="Гардеробна" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="14" y="8" width="92" height="40"/><path d="M14 20h92M60 8v40M32 26v14M46 26v14M74 26v14M88 26v14"/></svg>
+        Гардеробна
+      </button>
+      <button class="opt" type="button" data-v="bath" data-l="Меблі у ванну" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="18" y="18" width="84" height="26" rx="2"/><path d="M18 26h84"/><circle cx="60" cy="35" r="5"/></svg>
+        Меблі у ванну
+      </button>
+      <button class="opt" type="button" data-v="storage" data-l="Комора" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="18" y="8" width="84" height="40"/><path d="M18 21h84M18 34h84"/></svg>
+        Комора
+      </button>
+    </div>
+
+    <p class="est__q" id="q-layout">Яка конфігурація?</p>
+    <p class="est__hint">Якщо не впевнені — оберіть найближче, замірник уточнить на місці.</p>
+    <div class="opts" data-group="layout" role="group" aria-labelledby="q-layout">
+      <button class="opt" type="button" data-v="1" data-l="Пряма" aria-pressed="true">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="10" y="10" width="100" height="14"/></svg>
+        Пряма
+      </button>
+      <button class="opt" type="button" data-v="1.06" data-l="Кутова" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="10" y="10" width="100" height="14"/><rect x="10" y="24" width="14" height="24"/></svg>
+        Кутова
+      </button>
+      <button class="opt" type="button" data-v="1.05" data-l="Паралельна" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="10" y="8" width="100" height="13"/><rect x="10" y="36" width="100" height="13"/></svg>
+        Паралельна
+      </button>
+      <button class="opt" type="button" data-v="1.12" data-l="П-подібна" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="10" y="8" width="100" height="13"/><rect x="10" y="21" width="14" height="27"/><rect x="96" y="21" width="14" height="27"/></svg>
+        П-подібна
+      </button>
+      <button class="opt" type="button" data-v="1.18" data-l="З островом" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="10" y="8" width="100" height="13"/><rect x="30" y="32" width="60" height="16"/></svg>
+        З островом
+      </button>
+    </div>
+  </div>
+
+  <div class="step" data-step="2" hidden>
+    <p class="est__q"><label for="m">Скільки погонних метрів?</label></p>
+    <p class="est__hint">Сумарна довжина всіх секцій уздовж стін. Приблизно — цього достатньо.</p>
+    <div class="range">
+      <input id="m" type="range" min="1.5" max="12" step="0.1" value="4.2">
+      <output id="mOut" for="m">4,2</output><span class="u">м</span>
+    </div>
+
+    <p class="est__q" id="q-ceil">Висота стелі</p>
+    <div class="opts" data-group="ceil" role="group" aria-labelledby="q-ceil">
+      <button class="opt" type="button" data-v="1" data-l="До 2,7 м" aria-pressed="true">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><path d="M20 8h80M20 48h80M60 8v40"/><path d="M54 14l6-6 6 6M54 42l6 6 6-6"/></svg>
+        До 2,7 м
+      </button>
+      <button class="opt" type="button" data-v="1.08" data-l="2,7–3,2 м" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><path d="M20 4h80M20 52h80M60 4v48"/><path d="M54 10l6-6 6 6M54 46l6 6 6-6"/><rect x="86" y="12" width="18" height="32"/></svg>
+        2,7–3,2 м
+      </button>
+      <button class="opt" type="button" data-v="1.14" data-l="Понад 3,2 м" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><path d="M20 2h80M20 54h80M60 2v52"/><rect x="82" y="8" width="22" height="40"/><path d="M82 22h22M82 36h22"/></svg>
+        Понад 3,2 м
+      </button>
+    </div>
+  </div>
+
+  <div class="step" data-step="3" hidden>
+    <p class="est__q" id="q-tier">Рівень оснащення</p>
+    <p class="est__hint">Різниця — у матеріалі фасадів, стільниці й фурнітурі. Корпус і гарантія однакові.</p>
+    <div class="opts" data-group="tier" role="group" aria-labelledby="q-tier">
+      <button class="opt" type="button" data-v="18000-26000" data-l="Базова" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="14" y="10" width="92" height="36"/><path d="M60 10v36"/></svg>
+        Базова<em>Egger, Hettich, HPL</em>
+      </button>
+      <button class="opt" type="button" data-v="28000-42000" data-l="Оптимальна" aria-pressed="true">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="14" y="10" width="92" height="36"/><path d="M60 10v36M14 28h92"/><circle cx="37" cy="19" r="2.5"/><circle cx="83" cy="19" r="2.5"/></svg>
+        Оптимальна<em>емаль або шпон, Blum, кварц</em>
+      </button>
+      <button class="opt" type="button" data-v="45000-65000" data-l="Індивідуальна" aria-pressed="false">
+        <svg viewBox="0 0 120 56" aria-hidden="true"><rect x="14" y="8" width="92" height="40"/><path d="M38 8v40M60 8v40M82 8v40M14 28h92"/></svg>
+        Індивідуальна<em>шпон під зразок, кераміка, нестандарт</em>
+      </button>
+    </div>
+  </div>
+
+  <div class="step" data-step="4" hidden>
+    <div class="res">
+      <p class="est__hint" style="margin:0">Орієнтовна вартість</p>
+      <div class="res__sum" id="sum" aria-live="polite">—</div>
+      <p class="res__note">Це вилка за вашими вхідними. Точна сума фіксується після виміру й креслення — і далі не змінюється. Вбудована техніка рахується окремо.</p>
+      <dl id="brk"></dl>
+      <p class="when" id="whenRes"></p>
+      <div class="est__cta">
+        <a class="btn btn--primary" id="toBook" href="vymir.html">Записатись на вимір</a>
+        <button class="btn" type="button" id="again">Порахувати ще раз</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="est__nav">
+    <button class="est__back" type="button" id="back" hidden>Назад</button>
+    <button class="btn btn--primary est__next" type="button" id="next">Далі</button>
+  </div>
+</section>
+</main>
+<footer class="foot">
+  <a class="foot__mark" href="index.html" aria-label="Ваніль Студія — на головну">
+    <span>ВАНІЛЬ</span>
+    <span class="foot__arw" aria-hidden="true">&#8594;</span>
+    <span>СТУДІЯ</span>
+  </a>
+
+  <div class="foot__main">
+    <div class="foot__info">
+      <div>
+        <p class="foot__line"><span class="bar">Цех</span> <span class="bar mono" id="clock">--:-- (GMT+3)</span></p>
+        <p class="foot__line"><span class="bar">Кільцева дорога, 22б</span></p>
+        <p class="foot__line"><span class="bar">Київ, 03062</span></p>
+        <p class="foot__line"><span class="bar"><a href="mailto:cex@vanil.studio">cex@vanil.studio</a></span></p>
+      </div>
+      <div>
+        <p class="foot__line"><span class="bar">Вимір</span> <span class="bar">безкоштовно</span></p>
+        <p class="foot__line"><span class="bar">Київ і область</span></p>
+        <p class="foot__line"><span class="bar">Пн–Сб, 09:00–19:00</span></p>
+        <p class="foot__line"><span class="bar"><a href="tel:+380631405812">+38 063 140-58-12</a></span></p>
+      </div>
+      <div>
+        <p class="foot__line"><span class="bar">Гарантія</span> <span class="bar">5 років</span></p>
+        <p class="foot__line"><span class="bar">Корпус і фурнітура</span></p>
+        <p class="foot__line"><span class="bar">Строк 14–38 днів</span></p>
+        <p class="foot__line"><span class="bar"><a href="mailto:hello@vanil.studio">hello@vanil.studio</a></span></p>
+      </div>
+    </div>
+
+    <div class="foot__mail">
+      <h2>Передзвонимо за 10 хвилин</h2>
+      <p class="foot__hint">Залиште номер — наберемо в робочий час. Без форм і листування:
+         відповімо на питання голосом і, якщо треба, одразу запишемо на вимір.</p>
+      <form id="cb">
+        <input type="tel" id="cbtel" inputmode="tel" autocomplete="tel"
+               placeholder="+38 0__ ___ __ __" aria-label="Ваш телефон">
+        <button class="btn btn--primary" type="submit">Передзвоніть мені</button>
+        <p class="fnote" id="cbnote" role="status" aria-live="polite"></p>
+      </form>
+      <div class="foot__soc">
+        <p>Або наберіть самі: <a href="tel:+380631405812">+38 063 140-58-12</a></p>
+        <p><a href="vymir.html">Instagram</a>, <a href="vymir.html">Telegram</a>, <a href="vymir.html">Viber</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot__bot">
+    <p>Ваніль робить кухні на Кільцевій. Міряємо самі, збираємо самі.</p>
+    <p><a href="kolektsii.html">Дивитись усі проєкти</a></p>
+    <p>Прототип · ціни орієнтовні · заявка нікуди не надсилається<br>© Ваніль</p>
+  </div>
+</footer>
+<script src="assets/app.js" defer></script>
+</body>
+</html>
