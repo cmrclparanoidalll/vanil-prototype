@@ -12,6 +12,7 @@
   /* --w лишається назвою «основи», але основа тепер ванільна, не біла */
   --w:#F2EDE3; --k:#14120E; --grey:#6F675C; --hair:#DED5C6;
   --tint:#E7DFD0;               /* ховер по світлому */
+  --grey-dk:#A79C8C;            /* другорядний текст на темному: --grey там дає 2,3:1 */
   /* одна відстань від краю на весь сайт — секції й футер по одній лінії */
   --g:clamp(20px,3.5vw,50px);
   --s-xs:15px; --s-sm:30px; --s-md:35px; --s-lg:50px; --s-xl:115px; --s-2xl:154px;
@@ -184,7 +185,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 /* надрядок стоїть у своєму куті й не входить у ці 270px */
 .claim__eye{position:absolute;top:var(--s-lg);left:var(--g);
             display:flex;align-items:center;gap:10px;
-            font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)}
+            font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
 .claim__eye i{width:6px;height:6px;background:currentColor;flex:none}
 
 /* Два речення — два рядки, розриви проставлені в розмітці. Міру не
@@ -315,10 +316,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 .rail__head{display:grid;grid-template-columns:1fr auto;align-items:end;
             gap:var(--s-md) var(--s-2xl);padding:0 var(--g)}
 .rail__head h2{color:var(--w);max-width:14ch;
-               font-size:clamp(32px,4.6vw,66px);line-height:1.04;letter-spacing:-.04em}
+               font-size:clamp(38px,5.8vw,84px);line-height:1.04;letter-spacing:-.04em}
 .rail__intro{justify-self:end;max-width:44ch;
              display:flex;flex-direction:column;gap:var(--s-sm);align-items:flex-start}
-.rail__intro p{color:#A79C8C;font-size:17px;line-height:1.45;margin:0}
+.rail__intro p{color:var(--grey-dk);font-size:16px;line-height:1.45;margin:0}
 .rail__intro .btn--fill:hover{background:transparent;color:var(--w);border-color:var(--w)}
 
 .rail__track{display:flex;gap:calc(var(--s-sm) * 2);padding:var(--s-lg) var(--g);
@@ -333,12 +334,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
        background:var(--w);color:var(--k);padding:20px;min-height:440px;
        border-radius:12px;overflow:hidden}
 .rcard__top{display:flex;align-items:flex-start;gap:14px}
-.rcard__tag{font-size:11px;line-height:1.1;letter-spacing:.14em;text-transform:uppercase;
-            color:var(--grey);background:var(--tint);padding:5px 8px;border-radius:3px}
+.rcard__tag{font-size:12px;line-height:1.1;letter-spacing:.14em;text-transform:uppercase;
+            color:var(--grey);background:var(--tint);padding:5px 8px;border-radius:0}
 .rcard__vis{flex:1 1 auto;display:flex;align-items:center;justify-content:center;padding:2px 0}
 .rcard__vis svg{width:100%;height:auto;color:var(--k);opacity:.9}
 .rcard__body b{display:block;font-weight:400;font-size:26px;line-height:1.1;margin-bottom:10px}
-.rcard__body span{display:block;font-size:15px;line-height:1.4;color:var(--grey)}
+.rcard__body span{display:block;font-size:14px;line-height:1.4;color:var(--grey)}
 
 /* Режим із JS: сцена прилипає, доріжка їде через --rail-x, картки стоять
    сходинкою через --dy й меншають до країв через --sc (обидва рахує app.js).
@@ -354,7 +355,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 /* Поля різні: ліворуч — щоб перша картка стала по центру на старті,
    праворуч — звичайне поле сітки, щоб остання картка в кінці ходу
    лишилась біля правого краю, а не виїжджала в центр (як на рефі). */
+/* Сходинка зміщує картки тільки вниз (--dy від 0 до 2), тож ряд, вирівняний
+   по центру за лейаутом, візуально сидить нижче середини. Піднімаємо доріжку
+   на половину найбільшого зсуву — тоді повітря згори й знизу однакове. */
 .js-rail .rail__track{overflow:visible;scroll-snap-type:none;padding-block:0;
+                      margin-top:calc(var(--rail-wave) * -1);
                       padding-left:var(--rail-pad,var(--g));padding-right:var(--g);
                       transform:translate3d(var(--rail-x,0),0,0);will-change:transform}
 .js-rail .rcard{transform:translateY(calc(var(--dy,0) * var(--rail-wave))) scale(var(--sc,1));
