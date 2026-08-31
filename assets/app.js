@@ -87,6 +87,9 @@
     // Частка екрана плюс фіксована добавка — щоб хвіст не залежав тільки від
     // висоти вікна й на будь-якому екрані лишався помітним.
     var TAIL = 0.45, TAIL_PX = 260;
+    // Дзеркалить padding-bottom у .js-rail .rail: висота секції росте на ту саму
+    // величину, тож смуга чорного з'являється, а хід доріжки не коротшає.
+    var PAD_BOTTOM = 150;
 
     function measure() {
       // Міряємо без класу js-rail: доріжка тоді на своєму місці, без
@@ -122,7 +125,7 @@
       geom = cards.map(function (c) { return c.offsetLeft + c.offsetWidth / 2; });
       mid = window.innerWidth / 2;
       sec.style.setProperty("--rail-len",
-        Math.round(window.innerHeight + travel + window.innerHeight * TAIL + TAIL_PX) + "px");
+        Math.round(window.innerHeight + travel + window.innerHeight * TAIL + TAIL_PX + PAD_BOTTOM) + "px");
       top = sec.getBoundingClientRect().top + window.pageYOffset;
       paint();
     }

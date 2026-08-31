@@ -50,20 +50,30 @@
 
   <h2 class="claim__h">Вимір безкоштовний. Ціна фіксується після креслення&nbsp;— і далі не змінюється.</h2>
 
-  <svg class="claim__art" viewBox="0 0 900 520" fill="none" stroke="currentColor"
-       stroke-width="1" aria-hidden="true" focusable="false">
-    <path d="M60 500V220a40 40 0 0 1 40-40h300a40 40 0 0 0 40-40V60"/>
-    <path d="M140 500V260a40 40 0 0 1 40-40h300a40 40 0 0 0 40-40V60"/>
-    <path d="M220 500V300a40 40 0 0 1 40-40h300a40 40 0 0 0 40-40V60"/>
-    <path d="M840 20v260a40 40 0 0 1-40 40H620a40 40 0 0 0-40 40v160"/>
-    <path d="M760 20v220a40 40 0 0 1-40 40H540a40 40 0 0 0-40 40v180"/>
+  <!-- Лінії намальовані двічі: бліда підкладка тримає малюнок на місці,
+       а поверх неї тим самим контуром біжить світлий відрізок. -->
+  <svg class="claim__art" viewBox="0 0 900 560" fill="none" aria-hidden="true" focusable="false">
+    <g class="claim__base">
+      <path d="M900 40H360a80 80 0 0 0-80 80v120a80 80 0 0 1-80 80H0"/>
+      <path d="M900 130H430a80 80 0 0 0-80 80v150a80 80 0 0 1-80 80H60"/>
+      <path d="M900 220H500a80 80 0 0 0-80 80v180a80 80 0 0 1-80 80H140"/>
+      <path d="M900 310H570a80 80 0 0 0-80 80v170"/>
+      <path d="M900 400H640a80 80 0 0 0-80 80v80"/>
+    </g>
+    <g class="claim__flow">
+      <path pathLength="1" style="--d:0s"    d="M900 40H360a80 80 0 0 0-80 80v120a80 80 0 0 1-80 80H0"/>
+      <path pathLength="1" style="--d:-2.4s" d="M900 130H430a80 80 0 0 0-80 80v150a80 80 0 0 1-80 80H60"/>
+      <path pathLength="1" style="--d:-4.8s" d="M900 220H500a80 80 0 0 0-80 80v180a80 80 0 0 1-80 80H140"/>
+      <path pathLength="1" style="--d:-7.2s" d="M900 310H570a80 80 0 0 0-80 80v170"/>
+      <path pathLength="1" style="--d:-9.6s" d="M900 400H640a80 80 0 0 0-80 80v80"/>
+    </g>
   </svg>
 
   <div class="claim__foot">
     <p class="claim__body">Приїжджаємо з лазерним рівнем, знімаємо геометрію разом із завалом
        стін. Якщо після проєкту ціна вас не влаштує — ви нічого не винні.</p>
     <div class="claim__acts">
-      <a class="btn btn--fill" href="vymir.html">Записатись на вимір</a>
+      <a class="btn btn--primary" href="vymir.html">Записатись на вимір</a>
       <a class="lnk" href="rozrakhunok.html">Порахувати вартість</a>
       <a class="lnk" href="vyrobnytstvo.html">Приїхати в цех</a>
       <a class="lnk" href="vymir.html">Замовити зразки</a>
