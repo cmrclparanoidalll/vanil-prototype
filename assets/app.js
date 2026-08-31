@@ -63,6 +63,64 @@
     check();
   })();
 
+  /* ---------- 1b. Рейка етапів: горизонтальний хід від вертикального скролу ----
+     Секція стає вища за екран рівно на довжину ходу доріжки, сцена всередині
+     прилипає, доріжка їде вбік. Вмикаємо тільки якщо є що возити: коли всі
+     картки й так влазять у ширину, лишається звичайна секція. */
+  (function rail() {
+    var sec = $("#rail"), track = $("#railTrack");
+    if (!sec || !track || reduced) return;
+    if (!("CSS" in window) || !CSS.supports || !CSS.supports("position", "sticky")) return;
+
+    // Пін вимагає місця: на вузькому екрані картки не стають у ряд, на
+    // низькому — сходинка не влазить у 100vh і її обрізало б. Там лишаємо
+    // звичайний горизонтальний скрол пальцем.
+    var tooTight = window.matchMedia("(max-width:900px),(max-height:760px)");
+
+    var travel = 0, top = 0, queued = false;
+
+    function measure() {
+      // Ширину рахуємо без класу js-rail: доріжка тоді на своєму місці,
+      // без успадкованого transform, і scrollWidth чесний.
+      document.documentElement.classList.remove("js-rail");
+      sec.style.removeProperty("--rail-len");
+      travel = tooTight.matches ? 0 : Math.max(0, track.scrollWidth - window.innerWidth);
+      if (!travel) { track.scrollLeft = 0; return; }
+      document.documentElement.classList.add("js-rail");
+      sec.style.setProperty("--rail-len", (window.innerHeight + travel) + "px");
+      top = sec.getBoundingClientRect().top + window.pageYOffset;
+      paint();
+    }
+
+    function paint() {
+      if (!travel) return;
+      var p = (window.pageYOffset - top) / travel;
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+      track.style.setProperty("--rail-x", (-p * travel).toFixed(1) + "px");
+    }
+
+    function queue() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; paint(); });
+    }
+
+    // Клавіатура: сфокусована картка може бути за кадром — доводимо сторінку
+    // до тієї позиції, на якій доріжка її показує.
+    track.addEventListener("focusin", function (e) {
+      var card = e.target.closest(".rcard");
+      if (!card || !travel) return;
+      var x = card.offsetLeft + card.offsetWidth / 2 - window.innerWidth / 2;
+      x = x < 0 ? 0 : x > travel ? travel : x;
+      window.scrollTo({ top: top + x, behavior: "auto" });
+    });
+
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", measure);
+    window.addEventListener("load", measure);
+    measure();
+  })();
+
   /* ---------- 2. Відео: не автоплеїмо при prefers-reduced-motion ---------- */
   if (reduced) {
     $$("video").forEach(function (v) { v.removeAttribute("autoplay"); v.pause(); });

@@ -259,6 +259,70 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
   .band__in--grid{gap:var(--s-sm)}
 }
 
+/* ---------- рейка етапів: горизонтальний хід від вертикального скролу -----
+   Секція витягується по висоті (JS ставить --rail-len), сцена всередині
+   прилипає до вікна, а доріжка з картками їде вбік. Без JS і при
+   prefers-reduced-motion це просто горизонтальний скрол — контент цілий. */
+.rail{position:relative;background:var(--k);color:var(--w)}
+.rail__stage{display:flex;flex-direction:column;justify-content:center;gap:var(--s-md);
+             padding:var(--s-xl) 0;overflow:hidden}
+.rail__head{padding:0 var(--g);max-width:46ch}
+.rail__head h2{color:var(--w)}
+.rail__head p{color:#A79C8C;margin:14px 0 0}
+
+.rail__track{display:flex;gap:var(--s-sm);padding:var(--s-lg) var(--g);
+             overflow-x:auto;scroll-snap-type:x mandatory;
+             -webkit-overflow-scrolling:touch;scrollbar-width:none}
+.rail__track::-webkit-scrollbar{display:none}
+
+.rcard{flex:0 0 clamp(272px,26vw,376px);scroll-snap-align:center;
+       display:flex;flex-direction:column;gap:var(--s-sm);
+       background:var(--w);color:var(--k);padding:20px;min-height:440px;
+       transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.rcard__top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.rcard__tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+            color:var(--grey);border:1px solid var(--hair);padding:5px 9px}
+/* стрілка малюється рамкою — жодного шрифтового гліфа, який може не приїхати */
+.rcard__arw{position:relative;flex:none;width:32px;height:32px;border:1px solid var(--k)}
+.rcard__arw::before{content:"";position:absolute;inset:0;margin:auto;width:11px;height:11px;
+                    border-top:1px solid var(--k);border-right:1px solid var(--k);
+                    transform:translate(-1px,1px) rotate(45deg)}
+.rcard__vis{flex:1 1 auto;display:flex;align-items:center;justify-content:center;padding:8px 0}
+.rcard__vis svg{width:100%;height:auto;color:var(--k);opacity:.9}
+.rcard__body b{display:block;font-weight:400;font-size:26px;line-height:1.1;margin-bottom:10px}
+.rcard__body span{display:block;font-size:15px;line-height:1.4;color:var(--grey)}
+.rcard:hover{background:#fff}
+.rcard:hover .rcard__arw{background:var(--k)}
+.rcard:hover .rcard__arw::before{border-color:var(--w)}
+
+/* Режим із JS: сцена прилипає, доріжка їде через --rail-x, картки стоять
+   сходинкою через --dy. Горизонтальний скрол вимикаємо — ним керує сторінка. */
+.js-rail .rail{height:var(--rail-len)}
+.js-rail .rail__stage{position:sticky;top:0;height:100vh;padding:0;justify-content:center}
+.js-rail .rail__track{overflow:visible;scroll-snap-type:none;padding-block:0;
+                      transform:translate3d(var(--rail-x,0),0,0);will-change:transform}
+.js-rail .rcard{transform:translateY(calc(var(--dy,0) * var(--rail-wave)))}
+.js-rail{--rail-wave:clamp(0px,4.4vw,64px)}
+
+@media (max-width:900px){
+  .rail__stage{padding:var(--s-lg) 0}
+  .rcard{min-height:0}
+}
+/* дубль умови з app.js: якщо JS не встиг перерахувати після повороту екрана,
+   пін усе одно не вмикається і сходинку не обрізає */
+@media (max-width:900px),(max-height:760px){
+  .js-rail .rail{height:auto}
+  .js-rail .rail__stage{position:static;height:auto;padding:var(--s-xl) 0}
+  .js-rail .rail__track{overflow-x:auto;transform:none;scroll-snap-type:x mandatory}
+  .js-rail .rcard{transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .js-rail .rail{height:auto}
+  .js-rail .rail__stage{position:static;height:auto;padding:var(--s-xl) 0}
+  .js-rail .rail__track{overflow-x:auto;transform:none;scroll-snap-type:x mandatory}
+  .js-rail .rcard{transform:none}
+}
+
 /* ---------- стрічка UGC ---------- */
 /* ---------- сторінка-рубрика ---------- */
 .page{padding:var(--s-md) var(--g) 0}
