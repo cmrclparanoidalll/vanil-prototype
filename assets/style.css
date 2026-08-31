@@ -166,6 +166,49 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 }
 
 /* ---------- біла секція з рядом CTA ---------- */
+/* ---------- заявна секція (композиція з референсу) -----------------------
+   Суцільне темне поле на весь екран: надрядок і великий заголовок угорі
+   ліворуч, порожня середина з лінійною графікою, текст і дії — унизу
+   праворуч. Кути знизу скруглені, як у рефі. */
+.claim{
+  position:relative;overflow:hidden;isolation:isolate;
+  background:var(--k);color:var(--w);
+  min-height:min(100vh,940px);
+  display:grid;grid-template-rows:auto 1fr auto;
+  padding:var(--s-lg) var(--g) var(--s-lg);
+  border-radius:0 0 24px 24px;
+}
+.claim__eye{display:flex;align-items:center;gap:10px;
+            font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A79C8C}
+.claim__eye i{width:6px;height:6px;background:currentColor;flex:none}
+
+/* міра під це конкретне речення: 26ch кладуть його в три рядки, а не в шість */
+.claim__h{color:var(--w);max-width:26ch;margin-top:var(--s-md);
+          font-size:clamp(32px,4.6vw,66px);line-height:1.04;letter-spacing:-.02em}
+
+/* Графіка живе під текстом і не ловить кліки; вона фон, а не ілюстрація. */
+.claim__art{position:absolute;z-index:-1;right:calc(var(--g) * -1);bottom:12%;
+            width:min(62%,900px);height:auto;color:var(--w);opacity:.16;
+            stroke-linecap:round;stroke-linejoin:round}
+
+.claim__foot{justify-self:end;max-width:46ch;display:flex;flex-direction:column;
+             gap:var(--s-sm);align-items:flex-start}
+.claim__body{font-size:18px;line-height:1.4;color:#C9BFB0}
+.claim__acts{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px}
+/* на темному підкреслення й ховер кнопки беруть колір тексту, а не --k */
+.claim .lnk{border-bottom-color:currentColor}
+.claim .btn--fill:hover{background:transparent;color:var(--w);border-color:var(--w)}
+
+@media (max-width:900px){
+  .claim{min-height:0;padding:var(--s-lg) var(--g) var(--s-xl);row-gap:var(--s-xl)}
+  .claim__foot{justify-self:start;max-width:52ch}
+  .claim__art{width:min(90%,620px);bottom:auto;top:38%;opacity:.12}
+}
+@media (max-width:680px){
+  .claim{row-gap:var(--s-lg)}
+  .claim__acts{flex-direction:column;align-items:flex-start;gap:14px}
+}
+
 .vision{padding:var(--s-xl) var(--g)}
 .vision h2{max-width:30ch;margin-bottom:18px}
 .vision__lead{max-width:52ch;color:var(--grey);margin-bottom:var(--s-md)}
