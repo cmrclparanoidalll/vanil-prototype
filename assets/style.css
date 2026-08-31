@@ -53,18 +53,19 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;letter-spacing:0}
 
 /* смуга цифр — контраст масштабу, без розділювальної лінії */
-.figures{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-sm);
+/* колонки по ширині вмісту, вільне місце розкладене порівну:
+   перша притиснута до лівого поля, остання — до правого, проміжки однакові */
+.figures{display:grid;grid-template-columns:repeat(4,max-content);
+         justify-content:space-between;gap:var(--s-sm);
          padding:var(--s-2xl) var(--g)}
 .figures div{display:flex;flex-direction:column;gap:18px}
 .figures span{font-size:14px;line-height:1.35;color:var(--grey);max-width:20ch}
-/* остання колонка притиснута до правого поля — смуга тримає обидва краї сітки */
-.figures div:last-child{align-items:flex-end;text-align:right}
 @media (max-width:900px){
-  .figures{grid-template-columns:repeat(2,1fr);row-gap:var(--s-lg);padding:var(--s-xl) var(--g)}
+  .figures{grid-template-columns:repeat(2,max-content);row-gap:var(--s-lg);
+           padding:var(--s-xl) var(--g)}
 }
 @media (max-width:520px){
-  .figures{grid-template-columns:1fr}
-  .figures div:last-child{align-items:flex-start;text-align:left}
+  .figures{grid-template-columns:1fr;justify-content:stretch}
 }
 
 /* ---------- кнопки: 16px / 11px 20px / рамка 1px (як у референсі) ---------- */
