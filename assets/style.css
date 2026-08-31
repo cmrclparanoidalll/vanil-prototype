@@ -75,8 +75,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
   grid-template-columns:calc((100% - 2*var(--s-sm))/3) 1fr;
   justify-content:stretch;align-items:end;gap:var(--s-sm)
 }
-.figures--lead>div:first-child .num{font-size:clamp(96px,15vw,260px)}
-.figures--lead>div:first-child span{max-width:24ch}
+/* «0,2» набирається рівно у ширину своєї колонки: контейнерні одиниці дають
+   ширину колонки, 1.4622 — ширина накреслення «0,2» в Onest при кеглі 1
+   (по чорному, а не по метриках: від'ємний letter-spacing інакше виносить
+   праву щоку «2» на 3px за лінію) */
+.figures--lead>div:first-child{container-type:inline-size}
+.figures--lead>div:first-child .num{font-size:calc(100cqi / 1.4622)}
+.figures--lead>div:first-child span{max-width:none}
 /* специфічність із .figures — інакше загальне `.figures div` перебиває display */
 .figures .figures__rest{
   display:grid;grid-template-columns:repeat(3,max-content);
@@ -84,7 +89,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 }
 .figures__rest .num{font-size:clamp(40px,4.4vw,68px)}
 @media (max-width:900px){
+  /* колонка стає на всю ширину — цифру вже не розганяємо по ній */
   .figures--lead{grid-template-columns:1fr;row-gap:var(--s-lg)}
+  .figures--lead>div:first-child .num{font-size:clamp(96px,26vw,240px)}
+  .figures--lead>div:first-child span{max-width:24ch}
 }
 @media (max-width:520px){
   .figures .figures__rest{grid-template-columns:1fr;justify-content:stretch;row-gap:var(--s-lg)}
