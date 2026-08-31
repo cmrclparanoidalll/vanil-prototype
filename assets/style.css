@@ -338,7 +338,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 .rcard{flex:0 0 clamp(272px,26vw,376px);scroll-snap-align:center;
        display:flex;flex-direction:column;gap:var(--s-sm);
        background:var(--w);color:var(--k);padding:20px;min-height:440px;
-       border-radius:12px;overflow:hidden}
+       border-radius:5px;overflow:hidden}
 .rcard__top{display:flex;align-items:flex-start;gap:14px}
 .rcard__tag{font-size:12px;line-height:1.1;letter-spacing:.14em;text-transform:uppercase;
             color:var(--grey);background:var(--tint);padding:5px 8px;border-radius:0}
