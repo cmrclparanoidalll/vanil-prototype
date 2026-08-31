@@ -82,24 +82,45 @@
 
     // Наскільки картка на краю менша за центральну.
     var SHRINK = 0.18;
+    // Скільки чорного лишається після того, як доріжка доїхала: блок тримає
+    // останні картки на місці й доводить тло до наступної секції.
+    var TAIL = 0.45;
 
     function measure() {
-      // Ширину рахуємо без класу js-rail: доріжка тоді на своєму місці,
-      // без успадкованого transform і scale, і scrollWidth чесний.
+      // Міряємо без класу js-rail: доріжка тоді на своєму місці, без
+      // успадкованого transform і scale, і offsetLeft чесний.
       document.documentElement.classList.remove("js-rail");
       sec.style.removeProperty("--rail-len");
-      travel = tooTight.matches ? 0 : Math.max(0, track.scrollWidth - window.innerWidth);
-      if (!travel) {
-        track.scrollLeft = 0;
+      track.style.removeProperty("--rail-pad");
+
+      if (tooTight.matches || cards.length < 2) {
         cards.forEach(function (c) { c.style.removeProperty("--sc"); });
+        track.scrollLeft = 0;
+        travel = 0;
         return;
       }
-      // Центри карток запам'ятовуємо один раз: рахувати їх щокадру означало б
-      // читати layout одразу після запису transform — і платити ререндером.
+
+      // Крок рахуємо різницею offsetLeft — вона не залежить від того, які
+      // саме поля зараз у доріжки, тож переміряти після зміни полів не треба.
+      var w = cards[0].offsetWidth;
+      var stepX = cards[1].offsetLeft - cards[0].offsetLeft;
+      travel = (cards.length - 1) * stepX;
+      if (travel <= 0) { travel = 0; return; }
+
+      // Поля доріжки такі, щоб перша картка стояла по центру екрана вже на
+      // початку ходу, а остання — по центру в кінці. Як на референсі: картка
+      // з'являється одразу цілою, а не виїжджає збоку обрізаною.
+      var pad = Math.max(0, (window.innerWidth - w) / 2);
+      track.style.setProperty("--rail-pad", pad + "px");
+
+      document.documentElement.classList.add("js-rail");
+
+      // Центри читаємо вже з новими полями й запам'ятовуємо: рахувати їх
+      // щокадру означало б читати layout одразу після запису transform.
       geom = cards.map(function (c) { return c.offsetLeft + c.offsetWidth / 2; });
       mid = window.innerWidth / 2;
-      document.documentElement.classList.add("js-rail");
-      sec.style.setProperty("--rail-len", (window.innerHeight + travel) + "px");
+      sec.style.setProperty("--rail-len",
+        Math.round(window.innerHeight + travel + window.innerHeight * TAIL) + "px");
       top = sec.getBoundingClientRect().top + window.pageYOffset;
       paint();
     }

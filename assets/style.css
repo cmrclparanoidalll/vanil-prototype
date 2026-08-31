@@ -233,7 +233,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
    Секція витягується по висоті (JS ставить --rail-len), сцена всередині
    прилипає до вікна, а доріжка з картками їде вбік. Без JS і при
    prefers-reduced-motion це просто горизонтальний скрол — контент цілий. */
-.rail{position:relative;background:var(--k);color:var(--w);margin-bottom:var(--s-xl)}
+/* без відступу знизу: чорне тло має доходити впритул до наступної секції,
+   «повітря» дає хвіст самої секції (TAIL в app.js), а не ванільна смуга */
+.rail{position:relative;background:var(--k);color:var(--w)}
 .rail__stage{display:flex;flex-direction:column;justify-content:center;gap:var(--s-md);
              padding:var(--s-xl) 0;overflow:hidden}
 .rail__head{padding:0 var(--g);max-width:46ch}
@@ -265,6 +267,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 .js-rail .rail{height:var(--rail-len)}
 .js-rail .rail__stage{position:sticky;top:0;height:100vh;padding:0;justify-content:center}
 .js-rail .rail__track{overflow:visible;scroll-snap-type:none;padding-block:0;
+                      padding-inline:var(--rail-pad,var(--g));
                       transform:translate3d(var(--rail-x,0),0,0);will-change:transform}
 .js-rail .rcard{transform:translateY(calc(var(--dy,0) * var(--rail-wave))) scale(var(--sc,1));
                 will-change:transform}
