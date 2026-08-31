@@ -77,15 +77,27 @@
     // звичайний горизонтальний скрол пальцем.
     var tooTight = window.matchMedia("(max-width:900px),(max-height:760px)");
 
-    var travel = 0, top = 0, queued = false;
+    var cards = $$(".rcard", track);
+    var travel = 0, top = 0, mid = 0, geom = [], queued = false;
+
+    // Наскільки картка на краю менша за центральну.
+    var SHRINK = 0.18;
 
     function measure() {
       // Ширину рахуємо без класу js-rail: доріжка тоді на своєму місці,
-      // без успадкованого transform, і scrollWidth чесний.
+      // без успадкованого transform і scale, і scrollWidth чесний.
       document.documentElement.classList.remove("js-rail");
       sec.style.removeProperty("--rail-len");
       travel = tooTight.matches ? 0 : Math.max(0, track.scrollWidth - window.innerWidth);
-      if (!travel) { track.scrollLeft = 0; return; }
+      if (!travel) {
+        track.scrollLeft = 0;
+        cards.forEach(function (c) { c.style.removeProperty("--sc"); });
+        return;
+      }
+      // Центри карток запам'ятовуємо один раз: рахувати їх щокадру означало б
+      // читати layout одразу після запису transform — і платити ререндером.
+      geom = cards.map(function (c) { return c.offsetLeft + c.offsetWidth / 2; });
+      mid = window.innerWidth / 2;
       document.documentElement.classList.add("js-rail");
       sec.style.setProperty("--rail-len", (window.innerHeight + travel) + "px");
       top = sec.getBoundingClientRect().top + window.pageYOffset;
@@ -96,7 +108,15 @@
       if (!travel) return;
       var p = (window.pageYOffset - top) / travel;
       p = p < 0 ? 0 : p > 1 ? 1 : p;
-      track.style.setProperty("--rail-x", (-p * travel).toFixed(1) + "px");
+      var x = -p * travel;
+      track.style.setProperty("--rail-x", x.toFixed(1) + "px");
+
+      // Що далі картка від середини екрана, то вона менша.
+      for (var i = 0; i < cards.length; i++) {
+        var d = Math.abs(geom[i] + x - mid) / mid;
+        if (d > 1) d = 1;
+        cards[i].style.setProperty("--sc", (1 - SHRINK * d).toFixed(3));
+      }
     }
 
     function queue() {
@@ -104,16 +124,6 @@
       queued = true;
       requestAnimationFrame(function () { queued = false; paint(); });
     }
-
-    // Клавіатура: сфокусована картка може бути за кадром — доводимо сторінку
-    // до тієї позиції, на якій доріжка її показує.
-    track.addEventListener("focusin", function (e) {
-      var card = e.target.closest(".rcard");
-      if (!card || !travel) return;
-      var x = card.offsetLeft + card.offsetWidth / 2 - window.innerWidth / 2;
-      x = x < 0 ? 0 : x > travel ? travel : x;
-      window.scrollTo({ top: top + x, behavior: "auto" });
-    });
 
     window.addEventListener("scroll", queue, { passive: true });
     window.addEventListener("resize", measure);
