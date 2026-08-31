@@ -57,8 +57,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
          padding:var(--s-2xl) var(--g)}
 .figures div{display:flex;flex-direction:column;gap:18px}
 .figures span{font-size:14px;line-height:1.35;color:var(--grey);max-width:20ch}
-@media (max-width:900px){.figures{grid-template-columns:repeat(2,1fr);row-gap:var(--s-lg);padding:var(--s-xl) var(--g)}}
-@media (max-width:520px){.figures{grid-template-columns:1fr}}
+/* остання колонка притиснута до правого поля — смуга тримає обидва краї сітки */
+.figures div:last-child{align-items:flex-end;text-align:right}
+@media (max-width:900px){
+  .figures{grid-template-columns:repeat(2,1fr);row-gap:var(--s-lg);padding:var(--s-xl) var(--g)}
+}
+@media (max-width:520px){
+  .figures{grid-template-columns:1fr}
+  .figures div:last-child{align-items:flex-start;text-align:left}
+}
 
 /* ---------- кнопки: 16px / 11px 20px / рамка 1px (як у референсі) ---------- */
 .btn{
@@ -210,6 +217,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 .band__in h2{color:var(--w);max-width:22ch}
 @media (max-width:680px){.band__in{flex-direction:column;align-items:flex-start;gap:var(--s-sm)}}
 @media (max-width:900px){.band__in{padding:var(--s-xl) var(--g)}}
+
+/* варіант банера, вирівняний по сітці .book (друга колонка — «Вимір», «Гарантія») */
+.band__in--grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-2xl);align-items:end}
+.band__in--grid .btn{justify-self:start;align-self:end}
+@media (max-width:900px){
+  .band__in--grid{grid-template-columns:1fr;gap:var(--s-lg)}
+}
+@media (max-width:680px){
+  .band__in--grid{gap:var(--s-sm)}
+}
 
 /* ---------- стрічка UGC ---------- */
 /* ---------- сторінка-рубрика ---------- */
