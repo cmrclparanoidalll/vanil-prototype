@@ -106,14 +106,19 @@
       // саме поля зараз у доріжки, тож переміряти після зміни полів не треба.
       var w = cards[0].offsetWidth;
       var stepX = cards[1].offsetLeft - cards[0].offsetLeft;
-      travel = (cards.length - 1) * stepX;
-      if (travel <= 0) { travel = 0; return; }
+      if (stepX <= 0) { travel = 0; return; }
 
-      // Поля доріжки такі, щоб перша картка стояла по центру екрана вже на
-      // початку ходу, а остання — по центру в кінці. Як на референсі: картка
-      // з'являється одразу цілою, а не виїжджає збоку обрізаною.
-      var pad = Math.max(0, (window.innerWidth - w) / 2);
+      // Ліве поле — щоб перша картка стала по центру екрана на старті.
+      // Праве лишається звичайним полем сітки: наприкінці ходу остання картка
+      // спиняється біля правого краю, як на референсі, а не в центрі.
+      var edge = parseFloat(getComputedStyle(track).paddingRight) || 0;
+      var pad = Math.max(edge, (window.innerWidth - w) / 2);
       track.style.setProperty("--rail-pad", pad + "px");
+
+      // Хід = уся ширина доріжки мінус екран: pad + w + (n-1)*step + edge - vw
+      travel = pad + w + (cards.length - 1) * stepX + edge - window.innerWidth;
+      travel = Math.max(0, Math.round(travel));
+      if (!travel) return;
 
       document.documentElement.classList.add("js-rail");
 

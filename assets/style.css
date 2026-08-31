@@ -187,15 +187,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
             font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)}
 .claim__eye i{width:6px;height:6px;background:currentColor;flex:none}
 
-/* Розриви рядків проставлені в розмітці, тож міру не обмежуємо — інакше
-   рядок «…— і далі не» ламався б сам, не там, де треба. На вужчих екранах
-   він природно переноситься далі. */
+/* Два речення — два рядки, розриви проставлені в розмітці. Міру не
+   обмежуємо, інакше рядок ламався б сам не там, де треба. */
 .claim__h{grid-row:1;max-width:none;
-          font-size:clamp(32px,4.6vw,66px);line-height:1.04;letter-spacing:-.04em}
+          font-size:clamp(38px,5.8vw,84px);line-height:1.04;letter-spacing:-.04em}
 
-/* Графіка живе під текстом і не ловить кліки; вона фон, а не ілюстрація. */
-.claim__art{position:absolute;z-index:-1;right:calc(var(--g) * -1);top:34%;
-            width:min(64%,920px);height:auto;
+/* Графіка не заходить під текст: заголовок займає верх ліворуч, абзац із
+   кнопкою — низ праворуч, тож лініям лишається права верхня чверть.
+   Як на рефі: смуги йдуть повз текст, а не крізь нього. */
+.claim__art{position:absolute;z-index:-1;left:calc(var(--g) * -1);bottom:0;
+            width:min(46%,660px);height:auto;transform:scaleX(-1);
             fill:none;stroke:var(--k);stroke-width:1;
             stroke-linecap:round;stroke-linejoin:round;
             vector-effect:non-scaling-stroke}
@@ -219,7 +220,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
   .claim{min-height:0;grid-template-rows:auto auto auto;
          padding:var(--s-xl) var(--g) var(--s-xl);row-gap:var(--s-xl)}
   .claim__foot{justify-self:start;max-width:52ch}
-  .claim__art{width:min(90%,620px);top:38%}
+  /* На вузькому екрані вільної чверті не лишається — лінії неминуче лягли б
+     під абзац. Краще їх зняти, ніж возити текст по графіці. */
+  .claim__art{display:none}
 }
 @media (max-width:680px){
   .claim{row-gap:var(--s-lg)}
@@ -307,7 +310,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
              padding:var(--s-xl) 0;overflow:hidden}
 /* шапка за композицією референсу: великий заголовок ліворуч, абзац із дією —
    праворуч по краю поля, між ними й картками багато повітря */
-.rail__head{display:grid;grid-template-columns:1fr auto;align-items:start;
+/* align-items:end саджає абзац і кнопку на нижню лінію заголовка — інакше
+   кнопка висіла посеред правої половини без жодної опори. */
+.rail__head{display:grid;grid-template-columns:1fr auto;align-items:end;
             gap:var(--s-md) var(--s-2xl);padding:0 var(--g)}
 .rail__head h2{color:var(--w);max-width:14ch;
                font-size:clamp(32px,4.6vw,66px);line-height:1.04;letter-spacing:-.04em}
@@ -328,8 +333,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
        background:var(--w);color:var(--k);padding:20px;min-height:440px;
        border-radius:12px;overflow:hidden}
 .rcard__top{display:flex;align-items:flex-start;gap:14px}
-.rcard__tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;
-            color:var(--grey);border:1px solid var(--hair);padding:5px 9px;border-radius:4px}
+.rcard__tag{font-size:11px;line-height:1.1;letter-spacing:.14em;text-transform:uppercase;
+            color:var(--grey);background:var(--tint);padding:5px 8px;border-radius:3px}
 .rcard__vis{flex:1 1 auto;display:flex;align-items:center;justify-content:center;padding:2px 0}
 .rcard__vis svg{width:100%;height:auto;color:var(--k);opacity:.9}
 .rcard__body b{display:block;font-weight:400;font-size:26px;line-height:1.1;margin-bottom:10px}
@@ -346,8 +351,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 .js-rail .rail__pin{height:var(--rail-len)}
 .js-rail .rail{padding-bottom:150px}
 .js-rail .rail__stage{position:sticky;top:0;height:100vh;padding:0;justify-content:center}
+/* Поля різні: ліворуч — щоб перша картка стала по центру на старті,
+   праворуч — звичайне поле сітки, щоб остання картка в кінці ходу
+   лишилась біля правого краю, а не виїжджала в центр (як на рефі). */
 .js-rail .rail__track{overflow:visible;scroll-snap-type:none;padding-block:0;
-                      padding-inline:var(--rail-pad,var(--g));
+                      padding-left:var(--rail-pad,var(--g));padding-right:var(--g);
                       transform:translate3d(var(--rail-x,0),0,0);will-change:transform}
 .js-rail .rcard{transform:translateY(calc(var(--dy,0) * var(--rail-wave))) scale(var(--sc,1));
                 will-change:transform}
