@@ -68,6 +68,28 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
   .figures{grid-template-columns:1fr;justify-content:stretch}
 }
 
+/* --- контраст масштабу: одна цифра-герой, три супутні ---------------------
+   Перша колонка дорівнює першій колонці .grid3 — цифра стає рівно під праву
+   межу першої картки. Решта трьох цифр іде праворуч дрібнішим кеглем. */
+.figures--lead{
+  grid-template-columns:calc((100% - 2*var(--s-sm))/3) 1fr;
+  justify-content:stretch;align-items:end;gap:var(--s-sm)
+}
+.figures--lead>div:first-child .num{font-size:clamp(96px,15vw,260px)}
+.figures--lead>div:first-child span{max-width:24ch}
+/* специфічність із .figures — інакше загальне `.figures div` перебиває display */
+.figures .figures__rest{
+  display:grid;grid-template-columns:repeat(3,max-content);
+  justify-content:space-between;gap:var(--s-sm);align-items:end
+}
+.figures__rest .num{font-size:clamp(40px,4.4vw,68px)}
+@media (max-width:900px){
+  .figures--lead{grid-template-columns:1fr;row-gap:var(--s-lg)}
+}
+@media (max-width:520px){
+  .figures .figures__rest{grid-template-columns:1fr;justify-content:stretch;row-gap:var(--s-lg)}
+}
+
 /* ---------- кнопки: 16px / 11px 20px / рамка 1px (як у референсі) ---------- */
 .btn{
   display:inline-block;font-family:inherit;font-size:16px;line-height:1.4;font-weight:400;
