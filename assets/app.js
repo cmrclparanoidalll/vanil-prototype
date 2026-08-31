@@ -68,8 +68,8 @@
      прилипає, доріжка їде вбік. Вмикаємо тільки якщо є що возити: коли всі
      картки й так влазять у ширину, лишається звичайна секція. */
   (function rail() {
-    var sec = $("#rail"), track = $("#railTrack");
-    if (!sec || !track || reduced) return;
+    var sec = $("#rail"), track = $("#railTrack"), pin = $(".rail__pin");
+    if (!sec || !track || !pin || reduced) return;
     if (!("CSS" in window) || !CSS.supports || !CSS.supports("position", "sticky")) return;
 
     // Пін вимагає місця: на вузькому екрані картки не стають у ряд, на
@@ -87,15 +87,12 @@
     // Частка екрана плюс фіксована добавка — щоб хвіст не залежав тільки від
     // висоти вікна й на будь-якому екрані лишався помітним.
     var TAIL = 0.45, TAIL_PX = 260;
-    // Дзеркалить padding-bottom у .js-rail .rail: висота секції росте на ту саму
-    // величину, тож смуга чорного з'являється, а хід доріжки не коротшає.
-    var PAD_BOTTOM = 150;
 
     function measure() {
       // Міряємо без класу js-rail: доріжка тоді на своєму місці, без
       // успадкованого transform і scale, і offsetLeft чесний.
       document.documentElement.classList.remove("js-rail");
-      sec.style.removeProperty("--rail-len");
+      pin.style.removeProperty("--rail-len");
       track.style.removeProperty("--rail-pad");
 
       if (tooTight.matches || cards.length < 2) {
@@ -124,9 +121,11 @@
       // щокадру означало б читати layout одразу після запису transform.
       geom = cards.map(function (c) { return c.offsetLeft + c.offsetWidth / 2; });
       mid = window.innerWidth / 2;
-      sec.style.setProperty("--rail-len",
-        Math.round(window.innerHeight + travel + window.innerHeight * TAIL + TAIL_PX + PAD_BOTTOM) + "px");
-      top = sec.getBoundingClientRect().top + window.pageYOffset;
+      // Довжина стосується тільки піна: шапка тепер поза ним і їде звичайно.
+      // PAD_BOTTOM сюди не входить — це padding самої секції, під піном.
+      pin.style.setProperty("--rail-len",
+        Math.round(window.innerHeight + travel + window.innerHeight * TAIL + TAIL_PX) + "px");
+      top = pin.getBoundingClientRect().top + window.pageYOffset;
       paint();
     }
 
