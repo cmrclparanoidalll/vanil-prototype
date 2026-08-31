@@ -176,7 +176,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
   /* середній рядок фіксований: 310px — задана відстань від заголовка до
      абзацу з діями. Тому висота секції рахується з відступів і рядків,
      а не з min-height, інакше зайве місце розтягувало б цю відстань. */
-  display:grid;grid-template-rows:auto 310px auto;
+  /* колонку задаємо явно: без неї 100% у дочірніх елементів рахувався від
+     ширини вмісту (≈808px), а не від секції, і смуги не діставали країв */
+  display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 310px auto;
   /* 270px — задана відстань від картинки згори до заголовка;
      376px знизу дають рівно 470px від кнопки до заголовка «Проєкти»
      (решту добирають власний відступ .shead і його базова лінія) */
@@ -190,25 +192,29 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 
 /* Два речення — два рядки, розриви проставлені в розмітці. Міру не
    обмежуємо, інакше рядок ламався б сам не там, де треба. */
-.claim__h{grid-row:1;max-width:none;
-          font-size:clamp(38px,5.8vw,84px);line-height:1.04;letter-spacing:-.04em}
+.claim__h{grid-row:1;grid-column:1;max-width:none;
+          font-size:clamp(34px,5vw,72px);line-height:1.04;letter-spacing:-.04em}
 
-/* Графіка не заходить під текст: заголовок займає верх ліворуч, абзац із
-   кнопкою — низ праворуч, тож лініям лишається права верхня чверть.
-   Як на рефі: смуги йдуть повз текст, а не крізь нього. */
-.claim__art{position:absolute;z-index:-1;left:calc(var(--g) * -1);bottom:0;
-            width:min(46%,660px);height:auto;transform:scaleX(-1);
-            fill:none;stroke:var(--k);stroke-width:1;
+/* Смуги лежать серединою секції на всю ширину: заходять зліва внизу й
+   виходять угору праворуч, повз заголовок і повз абзац, а не під ними. */
+/* Не абсолют із підібраним top, а елемент сітки: смуги займають рядки 2–3,
+   тобто починаються рівно там, де закінчується заголовок, і тримаються там
+   самі, хоч би як змінився кегль. Поля перекриваються, щоб лінії йшли
+   від краю до краю. */
+.claim__artwrap{grid-row:2 / 4;grid-column:1;position:relative;z-index:-1;
+                width:calc(100% + var(--g) * 2);margin-inline:calc(var(--g) * -1)}
+.claim__art{position:absolute;inset:0;width:100%;height:100%;
+            fill:none;stroke:var(--k);stroke-width:1.5;
             stroke-linecap:round;stroke-linejoin:round;
             vector-effect:non-scaling-stroke}
-.claim__base{opacity:.14}
-/* pathLength=1 нормує довжину, тож штрих задається часткою контуру
-   і однаково працює на лініях різної довжини */
-.claim__flow path{opacity:.55;stroke-dasharray:.16 .84;stroke-dashoffset:1;
-                  animation:claimFlow 12s linear infinite;animation-delay:var(--d,0s)}
-@keyframes claimFlow{to{stroke-dashoffset:0}}
+.claim__base{opacity:.22}
+/* pathLength=1 нормує довжину контуру, тож зсув штриха задається часткою,
+   а не пікселями, і однаково лягає на лінії різної довжини.
+   --flow веде скрол (app.js), --i розводить лінії в часі. */
+.claim__flow path{opacity:.8;stroke-dasharray:.34 .66;
+                  stroke-dashoffset:calc(1.34 - var(--flow,0) * 1.7 + var(--i,0) * .09)}
 
-.claim__foot{grid-row:3;justify-self:end;max-width:46ch;
+.claim__foot{grid-row:3;grid-column:1;justify-self:end;max-width:46ch;
              display:flex;flex-direction:column;gap:var(--s-sm);align-items:flex-start}
 .claim__body{font-size:18px;line-height:1.4;color:var(--grey)}
 .claim__acts{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px}
@@ -223,14 +229,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
   .claim__foot{justify-self:start;max-width:52ch}
   /* На вузькому екрані вільної чверті не лишається — лінії неминуче лягли б
      під абзац. Краще їх зняти, ніж возити текст по графіці. */
-  .claim__art{display:none}
+  .claim__artwrap{display:none}
 }
 @media (max-width:680px){
   .claim{row-gap:var(--s-lg)}
   .claim__acts{flex-direction:column;align-items:flex-start;gap:14px}
 }
 @media (prefers-reduced-motion:reduce){
-  .claim__flow path{animation:none;stroke-dashoffset:0;opacity:.2}
+  .claim__flow path{stroke-dasharray:none;stroke-dashoffset:0;opacity:.2}
 }
 
 .vision{padding:var(--s-xl) var(--g)}
@@ -316,7 +322,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.c
 .rail__head{display:grid;grid-template-columns:1fr auto;align-items:end;
             gap:var(--s-md) var(--s-2xl);padding:0 var(--g)}
 .rail__head h2{color:var(--w);max-width:14ch;
-               font-size:clamp(38px,5.8vw,84px);line-height:1.04;letter-spacing:-.04em}
+               font-size:clamp(34px,5vw,72px);line-height:1.04;letter-spacing:-.04em}
 .rail__intro{justify-self:end;max-width:44ch;
              display:flex;flex-direction:column;gap:var(--s-sm);align-items:flex-start}
 .rail__intro p{color:var(--grey-dk);font-size:16px;line-height:1.45;margin:0}

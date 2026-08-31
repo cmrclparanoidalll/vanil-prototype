@@ -161,6 +161,39 @@
     measure();
   })();
 
+  /* ---------- 1c. Смуги в заявній секції: малює їх скрол ----------
+     Раніше тут крутився нескінченний keyframes: лінії бігли самі по собі,
+     навіть коли секції не видно. Тепер зсув штриха — функція від того,
+     скільки секції пройшло крізь екран: стоїш — стоять і вони. */
+  (function claimFlow() {
+    var sec = $(".claim");
+    if (!sec || !sec.querySelector(".claim__flow")) return;
+    if (reduced) { sec.style.setProperty("--flow", 1); return; }
+
+    var queued = false;
+
+    function paint() {
+      var r = sec.getBoundingClientRect();
+      var h = window.innerHeight || document.documentElement.clientHeight;
+      // 0 — секція щойно торкнулась нижнього краю екрана,
+      // 1 — повністю пройшла вгору за верхній.
+      var p = (h - r.top) / (h + r.height);
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+      sec.style.setProperty("--flow", p.toFixed(4));
+    }
+
+    function queue() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; paint(); });
+    }
+
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    window.addEventListener("load", paint);
+    paint();
+  })();
+
   /* ---------- 2. Відео: не автоплеїмо при prefers-reduced-motion ---------- */
   if (reduced) {
     $$("video").forEach(function (v) { v.removeAttribute("autoplay"); v.pause(); });
